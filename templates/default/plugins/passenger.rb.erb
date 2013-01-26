@@ -1,0 +1,80 @@
+#
+# Plugin Name:: passenger
+#
+# Copyright 2013, James Hardie Building Products, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#     http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+provides 'passenger'
+
+def parse_flags(flags)
+  ruby_string = nil
+  passenger_version = nil
+  prefix = nil
+  with = []
+
+  flags.each do |flag|
+    case flag
+    when /^add-module=.+\/gems\/(.+)\/gems\/passenger-(.+)\/ext.+$/
+      ruby_string = $1
+      passenger_version = $2
+    when /^prefix=(.+)$/
+      prefix = $1
+    when /^with-(.+)$/
+      with << $1
+    end
+  end
+
+  [ruby_string, passenger_version, prefix, with]
+end
+
+passenger Mash.new unless passenger
+passenger[:nginx_signature] = Mash.new
+
+nginx_signature = Mash.new
+
+status, stdout, stderr = run_command(:no_status_check => true,
+  :cwd => '<%= @passenger_nginx_prefix %>', :command => 'sbin/nginx -V')
+
+if status == 0
+  stderr.split("\n").each do |line|
+    case line
+    when /configure arguments: --(.+)/
+      args = $1.split(/\s--/)
+      ruby_string, passenger_version, prefix, with = parse_flags(args)
+      
+      nginx_signature[:ruby_string] = ruby_string
+      nginx_signature[:passenger_version] = passenger_version
+      nginx_signature[:prefix] = prefix
+      nginx_signature[:with] = with.uniq.sort
+    when /nginx version: nginx\/(.+)/
+      nginx_signature[:version] = $1
+    end
+  end
+end
+
+passenger[:nginx_signature] = nginx_signature
+
+=begin
+
+Test plugin via irb:
+
+$ irb
+
+require 'ohai'
+require 'yaml'
+Ohai::Config[:plugin_path] << '/etc/chef/ohai_plugins'
+o = Ohai::System.new; o.all_plugins; y o.passenger
+
+=end

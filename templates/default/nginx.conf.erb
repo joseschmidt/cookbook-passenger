@@ -1,0 +1,132 @@
+<%
+
+# refer to following for example nginx.conf
+# http://brainspl.at/nginx.conf.txt
+
+-%>
+# number of nginx workers
+worker_processes 1;
+
+# pid of nginx master process
+pid /var/run/nginx.pid;
+
+# number of worker connections; 1024 is a good default
+events {
+  worker_connections 1024;
+}
+
+# configure http access
+http {
+  # pull in mime-types. You can break out your config
+  # into as many include's as you want to make it cleaner
+  include mime.types;
+  
+  # set a default type for the rare situation that
+  # nothing matches from the mimie-type include
+  default_type application/octet-stream;
+  
+  log_format main '$remote_addr - $remote_user [$time_local] '
+    '"$request" $status $body_bytes_sent "$http_referer" '
+    '"$http_user_agent" "$http_x_forwarded_for"';
+  
+  # main access log
+  access_log /var/log/nginx/access.log main;
+  
+  # main error log
+  error_log /var/log/nginx/error.log debug;
+  
+  # no sendfile on OSX
+  sendfile on;
+  
+  # these are good default values
+  tcp_nopush        on;
+  tcp_nodelay       off;
+  
+  # output compression saves bandwidth
+  gzip              on;
+  gzip_http_version 1.1;
+  gzip_comp_level   2;
+  gzip_proxied      any;
+  gzip_types        text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+  
+  # TODO: figure out what this does
+  keepalive_timeout  65;        # 75
+  
+  # Phusion Passenger (required once, in http)
+  passenger_root <%= @passenger_root %>;
+  passenger_ruby <%= @passenger_ruby %>;
+  
+  # main (required once, in http/server/location/if)
+  passenger_spawn_method            smart;      # smart-lv2
+  
+  # deployment (may be used multiple times h/s/l/i)
+  <% node['rails_app']['stages'].each do |stage| -%>
+  <% pad = 9 - stage['codename'].length -%>
+  <%= "passenger_base_uri                /#{stage['codename']}; #{' ' * pad}# #{stage['name']} server" %>
+  <% end -%>
+  
+  # connection handling (may be used once per h/s/l/i)
+  passenger_use_global_queue        on;         # on
+  passenger_ignore_client_abort     off;        # off
+  passenger_buffer_response         on;         # on
+  
+  # security (may be used once per h/s/l/i)
+  passenger_friendly_error_pages    on;         # on
+  
+  # resource control settings  (may be used once in http)
+  passenger_max_pool_size           16;         # 6
+  
+  # resource control settings  (may be used once in http)
+  passenger_pool_idle_time          60;         # 300
+  
+  # resource control settings  (may be used multiple times in http)
+  <% node['rails_app']['stages'].each do |stage| -%>
+  <%= "passenger_pre_start               http://localhost/#{stage['codename']};" %>
+  <% end -%>
+  
+  # logging and debugging (may occur once in http)
+  passenger_log_level               3;          # 0
+  
+  # virtual host settings
+  server {
+    # port to listen on; can also be set to an IP:PORT
+    listen 80;
+    
+    # sets the domain(s) that this vhost serves requests for
+    server_name localhost;
+    
+    # document root (sub-URIs point to app public directory)
+    root /var/www/html;
+    
+    # redirect requests to / to production server
+    rewrite ^/$ $scheme://$http_host/<%= node['rails_app']['stages'].first['codename'] %> permanent;
+    
+    # redirect server error pages to the static page /50x.html
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+      root html;
+    } # location
+    
+    <% node['rails_app']['stages'].each do |stage| -%>
+    location /<%= stage['codename'] %> {
+      # deployment (may be used once in h/s/l/if)
+      passenger_enabled                 on;         # off
+      
+      # resource control settings  (may be used once in h/s/l/i)
+      passenger_min_instances           <%= stage['passenger_min_instances'] %>;          # 1
+      
+      # Ruby on Rails-specific options (may be used once in h/s/l/i)
+      rails_framework_spawner_idle_time 0;          # 1800
+      rails_app_spawner_idle_time       0;          # 600
+    } # location /<%= stage['codename'] %>
+    
+    <% end -%>
+    location ~ /assets/.*\.(css|js) {
+      gzip_static                       on;         # off
+      expires                           max;        # off
+      add_header                        Cache-Control public;
+    } # location ~ ^/assets/ {
+    
+  } # server
+  
+} # http
