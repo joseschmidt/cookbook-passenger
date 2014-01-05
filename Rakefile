@@ -13,6 +13,13 @@ desc 'Builds the package for ci server.'
 task :build_ci do
   Rake::Task[:knife].execute
   Rake::Task[:foodcritic].execute
+  Rake::Task[:chefspec].execute
+end # task
+
+#------------------------------------------------------------------ unit tests
+desc 'Runs chefspec unit tests against the cookbook.'
+task :chefspec do
+  sh 'bundle exec rspec'
 end # task
 
 #-------------------------------------------------- cookbook lint/style checks
