@@ -58,7 +58,7 @@ end # user
 #---------------------------------------------- install passenger nginx module
 passenger_root = "/usr/local/rvm/gems/#{node['passenger']['ruby_string']}" +
   "/gems/passenger-#{node['passenger']['version']}"
-passenger_ruby = "/usr/local/rvm/wrappers/" +
+passenger_ruby = '/usr/local/rvm/wrappers/' +
   "#{node['passenger']['ruby_string']}/ruby"
 
 nginx_signature = {

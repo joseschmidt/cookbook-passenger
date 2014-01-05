@@ -26,7 +26,7 @@ ohai 'reload_passenger_nginx' do
 end
 
 template "#{node['ohai']['plugin_path']}/passenger.rb" do
-  source "plugins/passenger.rb.erb"
+  source 'plugins/passenger.rb.erb'
   owner 'root'
   group 'root'
   mode  '0755'
