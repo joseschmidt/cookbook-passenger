@@ -1,3 +1,4 @@
+# coding: utf-8
 name              'passenger'
 maintainer        'James Hardie Building Products, Inc.'
 maintainer_email  'doc.walker@jameshardie.com'

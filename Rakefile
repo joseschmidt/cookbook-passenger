@@ -1,6 +1,7 @@
 #!/usr/bin/env rake
 # coding: utf-8
 require 'bundler/setup'
+require 'rubocop/rake_task'
 
 # Style guide for this Rakefile:
 # - place default task at the beginning of the file
@@ -12,6 +13,7 @@ task :default => [:build_ci]
 desc 'Builds the package for ci server.'
 task :build_ci do
   Rake::Task[:knife].execute
+  Rake::Task[:rubocop].execute
   Rake::Task[:foodcritic].execute
   Rake::Task[:chefspec].execute
 end # task
@@ -43,4 +45,12 @@ end # namespace
 desc 'Runs knife cookbook syntax checks against the cookbook.'
 task :knife do
   sh 'bundle exec knife cookbook test -a -c spec/chef/knife.rb'
+end # task
+
+#------------------------------------------------------ ruby lint/style checks
+desc 'Runs rubocop lint tool against the cookbook.'
+task :rubocop do
+  Rubocop::RakeTask.new(:rubocop) do |task|
+    # task.fail_on_error = true
+  end
 end # task

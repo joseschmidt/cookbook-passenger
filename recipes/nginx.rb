@@ -1,3 +1,4 @@
+# coding: utf-8
 #
 # Cookbook Name:: passenger
 # Recipe:: nginx
@@ -7,9 +8,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -45,7 +46,8 @@ logrotate_app 'nginx' do
   frequency   'daily'
   rotate      30
   options     %w(missingok compress delaycompress sharedscripts)
-  postrotate  '[ ! -f /var/run/nginx.pid ] || kill -USR1 `cat /var/run/nginx.pid`'
+  postrotate  '[ ! -f /var/run/nginx.pid ] || ' +
+    'kill -USR1 `cat /var/run/nginx.pid`'
 end # logrotate_app
 
 #----------------------------------------------------------- create nginx user
@@ -62,8 +64,8 @@ passenger_ruby = '/usr/local/rvm/wrappers/' +
   "#{node['passenger']['ruby_string']}/ruby"
 
 nginx_signature = {
-  'version' => node['passenger']['version_map'].
-    fetch(node['passenger']['version']),
+  'version' => node['passenger']['version_map']
+    .fetch(node['passenger']['version']),
   'passenger_version' => node['passenger']['version'],
   'prefix' => node['passenger']['nginx']['prefix'],
   'ruby_string' => node['passenger']['ruby_string'],
@@ -74,11 +76,11 @@ nginx_signature = {
     ].sort
 }
 
-extra_configure_flags = node['passenger']['nginx']['modules'].
-  map { |flag| "--with-#{flag}" }
+extra_configure_flags = node['passenger']['nginx']['modules']
+  .map { |flag| "--with-#{flag}" }
 
-configure_flags = node['passenger']['nginx']['configure_flags'].
-  map { |flag| "--#{flag}" }
+configure_flags = node['passenger']['nginx']['configure_flags']
+  .map { |flag| "--#{flag}" }
 
 rvm_shell "#{passenger_root}/bin/passenger-install-nginx-module" do
   ruby_string node['passenger']['ruby_string']
@@ -88,8 +90,8 @@ rvm_shell "#{passenger_root}/bin/passenger-install-nginx-module" do
     "--extra-configure-flags=\"#{extra_configure_flags.join(' ')}\""
   ].join(' ')
   not_if do
-    node.automatic_attrs.fetch('passenger') { {} }.
-      fetch('nginx_signature') { '' } == nginx_signature
+    node.automatic_attrs.fetch('passenger') { {} }
+      .fetch('nginx_signature') { '' } == nginx_signature
   end
   notifies :restart, 'service[nginx]'
   # /opt/nginx/sbin/nginx -t # test configuration and exit
@@ -108,6 +110,6 @@ template node['passenger']['nginx']['conf_path'] do
   group 'root'
   mode  '0644'
   variables :passenger_root => passenger_root,
-    :passenger_ruby => passenger_ruby
+            :passenger_ruby => passenger_ruby
   notifies :reload, 'service[nginx]'
 end # template
