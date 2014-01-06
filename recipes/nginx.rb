@@ -1,3 +1,4 @@
+# coding: utf-8
 #
 # Cookbook Name:: passenger
 # Recipe:: nginx
