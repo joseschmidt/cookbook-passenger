@@ -46,7 +46,8 @@ logrotate_app 'nginx' do
   frequency   'daily'
   rotate      30
   options     %w(missingok compress delaycompress sharedscripts)
-  postrotate  '[ ! -f /var/run/nginx.pid ] || kill -USR1 `cat /var/run/nginx.pid`'
+  postrotate  '[ ! -f /var/run/nginx.pid ] || ' +
+    'kill -USR1 `cat /var/run/nginx.pid`'
 end # logrotate_app
 
 #----------------------------------------------------------- create nginx user
