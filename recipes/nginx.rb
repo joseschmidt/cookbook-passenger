@@ -110,6 +110,6 @@ template node['passenger']['nginx']['conf_path'] do
   group 'root'
   mode  '0644'
   variables :passenger_root => passenger_root,
-    :passenger_ruby => passenger_ruby
+            :passenger_ruby => passenger_ruby
   notifies :reload, 'service[nginx]'
 end # template
