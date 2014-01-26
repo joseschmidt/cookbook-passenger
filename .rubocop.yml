@@ -11,4 +11,4 @@ EmptyLines:
   Enabled: false
 
 HashSyntax:
-  Enabled: false
+  EnforcedStyle: hash_rockets
