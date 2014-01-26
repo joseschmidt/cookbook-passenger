@@ -27,5 +27,5 @@ default['passenger']['nginx']['configure_flags']  = [
   'auto', 'auto-download', "prefix=#{node['passenger']['nginx']['prefix']}"
 ]
 default['passenger']['nginx']['modules']          = [
-  'http_gzip_static_module', # not needed with passenger-3.0.19
+  'http_gzip_static_module' # not needed with passenger-3.0.19
 ]
