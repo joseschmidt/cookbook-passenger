@@ -2,6 +2,7 @@
 source 'https://rubygems.org'
 
 group :development do
+  gem 'rvm', '~> 1.11.3.8'
 end # group
 
 group :test do
