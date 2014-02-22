@@ -4,6 +4,9 @@ CHANGELOG
 TBD
 ------------------
 
+- `NEW` add dependency badge to [README](README.md) | [#51][]
+- `NEW` add emeril gem to publish cookbook | [#49][]
+- `IMPROVE` update CHANGELOG | [#48][]
 - `IMPROVE` - update [README](README.md) | [#47][]
 - `IMPROVE` - add missing block closure comments | [#46][]
 - `IMPROVE` - update `test-kitchen` gem version | [#44][]
@@ -62,3 +65,6 @@ Legend
 [#44]: https://github.com/jhx/cookbook-passenger/issues/44
 [#46]: https://github.com/jhx/cookbook-passenger/issues/46
 [#47]: https://github.com/jhx/cookbook-passenger/issues/47
+[#48]: https://github.com/jhx/cookbook-passenger/issues/48
+[#49]: https://github.com/jhx/cookbook-passenger/issues/49
+[#51]: https://github.com/jhx/cookbook-passenger/issues/51
