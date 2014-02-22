@@ -31,7 +31,7 @@ describe 'passenger::nginx' do
     expect(chef_run).to include_recipe('passenger::default')
   end # it
 
-  context '/etc/rc.d/init.d/nginx' do
+  describe '/etc/rc.d/init.d/nginx' do
     it 'is owned by root:root with mode 0755' do
       expect(chef_run).to create_template(subject)
         .with(:owner => 'root', :group => 'root', :mode => '0755')
@@ -51,20 +51,20 @@ describe 'passenger::nginx' do
       resource = chef_run.template(subject)
       expect(resource).to notify('service[nginx]').to(:reload).delayed
     end # it
-  end # context
+  end # describe
 
-  context '/var/log/nginx' do
+  describe '/var/log/nginx' do
     it 'is owned by root:root with mode 0755' do
       expect(chef_run).to create_directory(subject)
         .with(:owner => 'root', :group => 'root', :mode => '0755')
     end # it
-  end # context
+  end # describe
 
   it 'includes recipe logrotate' do
     expect(chef_run).to include_recipe('logrotate')
   end # it
 
-  context '/etc/logrotate.d/nginx' do
+  describe '/etc/logrotate.d/nginx' do
     it 'is owned by root:root with mode 0440' do
       expect(chef_run).to create_template(subject)
         .with(:owner => 'root', :group => 'root', :mode => '0440')
@@ -110,7 +110,7 @@ describe 'passenger::nginx' do
         .with_content('[ ! -f /var/run/nginx.pid ] || ' \
         'kill -USR1 `cat /var/run/nginx.pid`')
     end # it
-  end # context
+  end # describe
 
   it 'creates user nginx-qa' do
     expect(chef_run).to create_user('nginx-qa')
@@ -127,7 +127,7 @@ describe 'passenger::nginx' do
     expect(chef_run).to start_service('nginx')
   end # it
 
-  context '/opt/nginx-qa/conf/nginx.conf' do
+  describe '/opt/nginx-qa/conf/nginx.conf' do
     it 'is owned by root:root with mode 0644' do
       expect(chef_run).to create_template(subject)
         .with(:owner => 'root', :group => 'root', :mode => '0644')
@@ -185,6 +185,6 @@ describe 'passenger::nginx' do
       resource = chef_run.template(subject)
       expect(resource).to notify('service[nginx]').to(:reload).delayed
     end # it
-  end # context
+  end # describe
 
 end # describe
