@@ -4,9 +4,9 @@ require 'spec_helper'
 describe 'passenger::default' do
   before do
     # required for travis-ci
-    stub_command("bash -c \"source /etc/profile && type rvm | " +
+    stub_command("bash -c \"source /etc/profile && type rvm | " \
       "cat | head -1 | grep -q '^rvm is a function$'\"").and_return(true)
-    stub_command("bash -c \"source /etc/profile.d/rvm.sh && type rvm | " +
+    stub_command("bash -c \"source /etc/profile.d/rvm.sh && type rvm | " \
       "cat | head -1 | grep -q '^rvm is a function$'\"").and_return(true)
   end # before
 

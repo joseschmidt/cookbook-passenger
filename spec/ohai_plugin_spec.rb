@@ -24,7 +24,7 @@ describe 'passenger::ohai_plugin' do
         .with_content("provides 'passenger'")
     end # it
 
-    it 'matches expected content' do
+    it 'matches expected cwd' do
       expect(chef_run).to render_file(subject)
         .with_content(":cwd => '/opt/nginx-qa'")
     end # it
