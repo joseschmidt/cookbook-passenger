@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-0.1.0 / 2014-02-22
+0.1.1 / 2014-02-22
 ------------------
 
 - `NEW` add dependency badge to [README](README.md) | [#51][]
