@@ -41,6 +41,17 @@ namespace :foodcritic do
   end # task
 end # namespace
 
+#----------------------------------------------------------- integration tests
+begin
+  require 'kitchen/rake_tasks'
+  Kitchen::RakeTasks.new
+
+  desc 'Run all test instances'
+  task :kitchen => ['kitchen:all']
+rescue LoadError
+  STDOUT.puts '[WARN] Kitchen::RakeTasks not loaded'
+end
+
 #--------------------------------------------------------------- syntax checks
 desc 'Runs knife cookbook syntax checks against the cookbook.'
 task :knife do

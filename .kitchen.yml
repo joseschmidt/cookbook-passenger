@@ -1,0 +1,34 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  # locally-provisioned opscode-centos-5.10 box with omnibus chef 11.8.2
+  - name: centos-5.10-chef-11.8.2
+    driver:
+      box: opscode-centos-5.10-chef-11.8.2
+    run_list:
+      - 'recipe[yum::epel]' # required for libyaml-devel package
+
+  # locally-provisioned opscode-centos-6.5 box with omnibus chef 11.8.2
+  - name: centos-6.5-chef-11.8.2
+    driver:
+      box: opscode-centos-6.5-chef-11.8.2
+    run_list:
+      - 'recipe[yum::epel]' # required for libyaml-devel package
+
+suites:
+  - name: passenger
+    run_list:
+      - 'recipe[passenger::nginx]'
+    attributes:
+      passenger:
+        nginx:
+          prefix: /opt/nginx-qa
+          user: nginx-qa
+        ruby_string: ruby-1.9.3-p327@global
+      rvm:
+        default_ruby: 1.9.3-p327@global
