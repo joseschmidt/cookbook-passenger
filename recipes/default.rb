@@ -32,7 +32,7 @@ include_recipe 'rvm::gem_package'
 #------------------------------------------------ install package dependencies
 %w(ruby-devel curl-devel).each do |pkg|
   package pkg
-end
+end # %w(...)
 
 #------------------------------------------------------ install passenger ruby
 rvm_environment node['passenger']['ruby_string']
@@ -43,4 +43,4 @@ rvm_global_gem 'ohai'
 rvm_global_gem 'passenger' do
   version node['passenger']['version']
   action :install
-end
+end # rvm_global_gem

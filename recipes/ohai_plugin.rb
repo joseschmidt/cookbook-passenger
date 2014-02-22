@@ -24,7 +24,7 @@
 ohai 'reload_passenger_nginx' do
   action :nothing
   plugin 'passenger'
-end
+end # ohai
 
 template "#{node['ohai']['plugin_path']}/passenger.rb" do
   source 'plugins/passenger.rb.erb'
@@ -35,6 +35,6 @@ template "#{node['ohai']['plugin_path']}/passenger.rb" do
     :passenger_nginx_prefix => node['passenger']['nginx']['prefix']
   )
   notifies :reload, 'ohai[reload_passenger_nginx]', :immediately
-end
+end # template
 
 include_recipe 'ohai'
