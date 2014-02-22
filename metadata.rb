@@ -5,7 +5,7 @@ maintainer_email  'doc.walker@jameshardie.com'
 license           'Apache 2.0'
 description       'Installs/configures passenger'
 
-version           '0.1.0'
+version           '0.1.1'
 depends           'build-essential'
 depends           'logrotate'
 depends           'ohai', '>= 1.1.4'
