@@ -2,6 +2,7 @@
 source 'https://rubygems.org'
 
 group :development do
+  gem 'emeril', '~> 0.7.0'
   gem 'pimpmychangelog', '~> 0.1.2'
 end # group
 

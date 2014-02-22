@@ -58,6 +58,16 @@ task :knife do
   sh 'bundle exec knife cookbook test -a -c spec/chef/knife.rb'
 end # task
 
+#-------------------------------------------------------------- release/tagger
+begin
+  require 'emeril/rake_tasks'
+  Emeril::RakeTasks.new do |t|
+    t.config[:publish_to_community] = false
+  end
+rescue LoadError
+  STDOUT.puts '[WARN] Emeril::RakeTasks not loaded'
+end
+
 #------------------------------------------------------ ruby lint/style checks
 desc 'Runs rubocop lint tool against the cookbook.'
 task :rubocop do
