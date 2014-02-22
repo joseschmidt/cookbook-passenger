@@ -2,6 +2,7 @@
 source 'https://rubygems.org'
 
 group :development do
+  gem 'pimpmychangelog', '~> 0.1.2'
 end # group
 
 group :test do
