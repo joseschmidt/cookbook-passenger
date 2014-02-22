@@ -13,7 +13,7 @@ describe 'passenger::ohai_plugin' do
     end.converge(described_recipe)
   end # let
 
-  context '/etc/chef/ohai_plugins-qa/passenger.rb' do
+  describe '/etc/chef/ohai_plugins-qa/passenger.rb' do
     it 'is owned by root:root with mode 0755' do
       expect(chef_run).to create_template(subject)
         .with(:owner => 'root', :group => 'root', :mode => '0755')
@@ -34,7 +34,7 @@ describe 'passenger::ohai_plugin' do
       expect(resource).to notify('ohai[reload_passenger_nginx]').to(:reload)
         .immediately
     end # it
-  end # context
+  end # describe
 
   it 'includes recipe ohai' do
     expect(chef_run).to include_recipe('ohai')
