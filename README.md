@@ -1,6 +1,7 @@
 passenger Cookbook
 ==================
 [![Build Status](https://travis-ci.org/jhx/cookbook-passenger.png?branch=master)](https://travis-ci.org/jhx/cookbook-passenger)
+[![Dependency Status](https://gemnasium.com/jhx/cookbook-passenger.png)](https://gemnasium.com/jhx/cookbook-passenger)
 
 Installs and configures passenger and nginx for the Rails app.
 
