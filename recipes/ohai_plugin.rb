@@ -1,4 +1,4 @@
-# coding: utf-8
+# encoding: utf-8
 #
 # Cookbook Name:: passenger
 # Recipe:: ohai_plugin

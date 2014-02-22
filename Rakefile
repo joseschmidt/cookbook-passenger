@@ -1,5 +1,5 @@
 #!/usr/bin/env rake
-# coding: utf-8
+# encoding: utf-8
 require 'bundler/setup'
 require 'rubocop/rake_task'
 

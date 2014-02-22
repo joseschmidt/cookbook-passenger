@@ -1,4 +1,4 @@
-# coding: utf-8
+# encoding: utf-8
 if defined?(ChefSpec)
   # cookbook:: rvm
   def create_rvm_environment(resource_name)
