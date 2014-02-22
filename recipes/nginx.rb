@@ -46,7 +46,7 @@ logrotate_app 'nginx' do
   frequency   'daily'
   rotate      30
   options     %w(missingok compress delaycompress sharedscripts)
-  postrotate  '[ ! -f /var/run/nginx.pid ] || ' +
+  postrotate  '[ ! -f /var/run/nginx.pid ] || ' \
     'kill -USR1 `cat /var/run/nginx.pid`'
 end # logrotate_app
 
@@ -60,7 +60,7 @@ end # user
 #---------------------------------------------- install passenger nginx module
 passenger_root = "/usr/local/rvm/gems/#{node['passenger']['ruby_string']}" +
   "/gems/passenger-#{node['passenger']['version']}"
-passenger_ruby = '/usr/local/rvm/wrappers/' +
+passenger_ruby = '/usr/local/rvm/wrappers/' \
   "#{node['passenger']['ruby_string']}/ruby"
 
 nginx_signature = {

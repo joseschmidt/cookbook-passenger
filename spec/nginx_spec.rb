@@ -4,9 +4,9 @@ require 'spec_helper'
 describe 'passenger::nginx' do
   before do
     # required for travis-ci
-    stub_command("bash -c \"source /etc/profile && type rvm | " +
+    stub_command("bash -c \"source /etc/profile && type rvm | " \
       "cat | head -1 | grep -q '^rvm is a function$'\"").and_return(true)
-    stub_command("bash -c \"source /etc/profile.d/rvm.sh && type rvm | " +
+    stub_command("bash -c \"source /etc/profile.d/rvm.sh && type rvm | " \
       "cat | head -1 | grep -q '^rvm is a function$'\"").and_return(true)
   end # before
 
@@ -107,7 +107,7 @@ describe 'passenger::nginx' do
 
     it 'matches expected option postrotate' do
       expect(chef_run).to render_file(subject)
-        .with_content('[ ! -f /var/run/nginx.pid ] || ' +
+        .with_content('[ ! -f /var/run/nginx.pid ] || ' \
         'kill -USR1 `cat /var/run/nginx.pid`')
     end # it
   end # context
@@ -135,13 +135,13 @@ describe 'passenger::nginx' do
 
     it 'matches expected passenger_root' do
       expect(chef_run).to render_file(subject)
-        .with_content('passenger_root ' +
+        .with_content('passenger_root ' \
         '/usr/local/rvm/gems/1.9.3-fake/gems/passenger-3.0.19-fake;')
     end # it
 
     it 'matches expected passenger_ruby' do
       expect(chef_run).to render_file(subject)
-        .with_content('passenger_ruby ' +
+        .with_content('passenger_ruby ' \
         '/usr/local/rvm/wrappers/1.9.3-fake/ruby;')
     end # it
 
@@ -167,7 +167,7 @@ describe 'passenger::nginx' do
 
     it 'matches expected rewrite' do
       expect(chef_run).to render_file(subject)
-        .with_content('rewrite ' +
+        .with_content('rewrite ' \
         '^/$ $scheme://$http_host/neo permanent;')
     end # it
 
