@@ -14,17 +14,17 @@ describe 'passenger::ohai_plugin' do
   end # let
 
   describe '/etc/chef/ohai_plugins-qa/passenger.rb' do
-    it 'is owned by root:root with mode 0755' do
+    it 'creates template with expected owner, group, mode' do
       expect(chef_run).to create_template(subject)
         .with(:owner => 'root', :group => 'root', :mode => '0755')
     end # it
 
-    it "provides 'passenger'" do
+    it 'renders file with expected provides' do
       expect(chef_run).to render_file(subject)
         .with_content("provides 'passenger'")
     end # it
 
-    it 'matches expected cwd' do
+    it 'renders file with expected cwd' do
       expect(chef_run).to render_file(subject)
         .with_content(":cwd => '/opt/nginx-qa'")
     end # it
