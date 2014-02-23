@@ -32,17 +32,17 @@ describe 'passenger::nginx' do
   end # it
 
   describe '/etc/rc.d/init.d/nginx' do
-    it 'is owned by root:root with mode 0755' do
+    it 'creates template with expected owner, group, mode' do
       expect(chef_run).to create_template(subject)
         .with(:owner => 'root', :group => 'root', :mode => '0755')
     end # it
 
-    it 'matches expected nginx=' do
+    it 'renders file with expected nginx=' do
       expect(chef_run).to render_file(subject)
         .with_content('nginx="/opt/nginx-qa/sbin/nginx"')
     end # it
 
-    it 'matches expected NGINX_CONF_FILE=' do
+    it 'renders file with expected NGINX_CONF_FILE=' do
       expect(chef_run).to render_file(subject)
         .with_content('NGINX_CONF_FILE="/opt/nginx-qa/conf/nginx.conf"')
     end # it
@@ -54,7 +54,7 @@ describe 'passenger::nginx' do
   end # describe
 
   describe '/var/log/nginx' do
-    it 'is owned by root:root with mode 0755' do
+    it 'creates directory with expected owner, group, mode' do
       expect(chef_run).to create_directory(subject)
         .with(:owner => 'root', :group => 'root', :mode => '0755')
     end # it
@@ -65,50 +65,50 @@ describe 'passenger::nginx' do
   end # it
 
   describe '/etc/logrotate.d/nginx' do
-    it 'is owned by root:root with mode 0440' do
+    it 'creates template with expected owner, group, mode' do
       expect(chef_run).to create_template(subject)
         .with(:owner => 'root', :group => 'root', :mode => '0440')
     end # it
 
-    it 'matches expected path' do
+    it 'renders file with expected path' do
       expect(chef_run).to render_file(subject)
-        .with_content('"/var/log/nginx/*.log"')
+        .with_content('/var/log/nginx/*.log')
     end # it
 
-    it 'matches expected frequency' do
+    it 'renders file with expected frequency' do
       expect(chef_run).to render_file(subject)
         .with_content('daily')
     end # it
 
-    it 'matches expected rotation interval' do
+    it 'renders file with expected rotation limit' do
       expect(chef_run).to render_file(subject)
         .with_content('rotate 30')
     end # it
 
-    it 'matches expected option missingok' do
+    it 'renders file with expected options (missingok)' do
       expect(chef_run).to render_file(subject)
         .with_content('missingok')
     end # it
 
-    it 'matches expected option compress' do
+    it 'renders file with expected options (compress)' do
       expect(chef_run).to render_file(subject)
         .with_content('compress')
     end # it
 
-    it 'matches expected option delaycompress' do
+    it 'renders file with expected options (delaycompress)' do
       expect(chef_run).to render_file(subject)
         .with_content('delaycompress')
     end # it
 
-    it 'matches expected option sharedscripts' do
+    it 'renders file with expected options (sharedscripts)' do
       expect(chef_run).to render_file(subject)
         .with_content('sharedscripts')
     end # it
 
-    it 'matches expected option postrotate' do
-      expect(chef_run).to render_file(subject)
-        .with_content('[ ! -f /var/run/nginx.pid ] || ' \
-        'kill -USR1 `cat /var/run/nginx.pid`')
+    it 'renders file with expected postrotate command' do
+      expect(chef_run).to render_file(subject).with_content(
+        '[ ! -f /var/run/nginx.pid ] || kill -USR1 `cat /var/run/nginx.pid`'
+      )
     end # it
   end # describe
 
@@ -128,55 +128,55 @@ describe 'passenger::nginx' do
   end # it
 
   describe '/opt/nginx-qa/conf/nginx.conf' do
-    it 'is owned by root:root with mode 0644' do
+    it 'creates template with expected owner, group, mode' do
       expect(chef_run).to create_template(subject)
         .with(:owner => 'root', :group => 'root', :mode => '0644')
     end # it
 
-    it 'matches expected passenger_root' do
+    it 'renders file with expected passenger_root' do
       expect(chef_run).to render_file(subject)
         .with_content('passenger_root ' \
         '/usr/local/rvm/gems/1.9.3-fake/gems/passenger-3.0.19-fake;')
     end # it
 
-    it 'matches expected passenger_ruby' do
+    it 'renders file with expected passenger_ruby' do
       expect(chef_run).to render_file(subject)
         .with_content('passenger_ruby ' \
         '/usr/local/rvm/wrappers/1.9.3-fake/ruby;')
     end # it
 
-    it 'matches expected passenger_base_uri neo' do
+    it 'renders file with expected passenger_base_uri neo' do
       expect(chef_run).to render_file(subject)
         .with_content(/passenger_base_uri\s.*\/neo;/)
     end # it
 
-    it 'matches expected passenger_base_uri morpheus' do
+    it 'renders file with expected passenger_base_uri morpheus' do
       expect(chef_run).to render_file(subject)
         .with_content(/passenger_base_uri\s.*\/morpheus;/)
     end # it
 
-    it 'matches expected passenger_pre_start neo' do
+    it 'renders file with expected passenger_pre_start neo' do
       expect(chef_run).to render_file(subject)
         .with_content(%r{passenger_pre_start\s.*http://localhost/neo;})
     end # it
 
-    it 'matches expected passenger_pre_start morpheus' do
+    it 'renders file with expected passenger_pre_start morpheus' do
       expect(chef_run).to render_file(subject)
         .with_content(%r{passenger_pre_start\s.*http://localhost/morpheus;})
     end # it
 
-    it 'matches expected rewrite' do
+    it 'renders file with expected rewrite' do
       expect(chef_run).to render_file(subject)
         .with_content('rewrite ' \
         '^/$ $scheme://$http_host/neo permanent;')
     end # it
 
-    it 'matches expected location /neo' do
+    it 'renders file with expected location /neo' do
       expect(chef_run).to render_file(subject)
         .with_content('location /neo {')
     end # it
 
-    it 'matches expected location /morpheus' do
+    it 'renders file with expected location /morpheus' do
       expect(chef_run).to render_file(subject)
         .with_content('location /morpheus {')
     end # it
