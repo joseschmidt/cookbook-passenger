@@ -42,6 +42,7 @@ include_recipe 'logrotate'
 # create configuration file in /etc/logrotate.d/
 logrotate_app 'nginx' do
   cookbook    'logrotate'
+  template_mode '0644'
   path        '/var/log/nginx/*.log'
   frequency   'daily'
   rotate      30
