@@ -60,10 +60,6 @@ describe 'passenger::nginx' do
     end # it
   end # describe
 
-  it 'includes recipe logrotate' do
-    expect(chef_run).to include_recipe('logrotate')
-  end # it
-
   describe '/etc/logrotate.d/nginx' do
     it 'creates template with expected owner, group, mode' do
       expect(chef_run).to create_template(subject)

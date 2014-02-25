@@ -37,9 +37,6 @@ directory '/var/log/nginx' do
 end # directory
 
 #------------------------------------------------------- configure logrotate.d
-include_recipe 'logrotate'
-
-# create configuration file in /etc/logrotate.d/
 logrotate_app 'nginx' do
   cookbook    'logrotate'
   template_mode '0644'
