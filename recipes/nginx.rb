@@ -38,13 +38,13 @@ end # directory
 
 #------------------------------------------------------- configure logrotate.d
 logrotate_app 'nginx' do
-  cookbook    'logrotate'
+  cookbook      'logrotate'
   template_mode '0644'
-  path        '/var/log/nginx/*.log'
-  frequency   'daily'
-  rotate      30
-  options     %w(missingok compress delaycompress sharedscripts)
-  postrotate  '[ ! -f /var/run/nginx.pid ] || ' \
+  path          '/var/log/nginx/*.log'
+  frequency     'daily'
+  rotate        30
+  options       %w(missingok compress delaycompress sharedscripts)
+  postrotate    '[ ! -f /var/run/nginx.pid ] || ' \
     'kill -USR1 `cat /var/run/nginx.pid`'
 end # logrotate_app
 
