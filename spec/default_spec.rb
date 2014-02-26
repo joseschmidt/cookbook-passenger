@@ -24,37 +24,53 @@ describe 'passenger::default' do
     end.converge(described_recipe)
   end # cached
 
-  it 'includes recipe build-essential' do
-    expect(chef_run).to include_recipe('build-essential')
-  end # it
+  describe 'build-essential' do
+    it 'includes described recipe' do
+      expect(chef_run).to include_recipe(subject)
+    end # it
+  end # describe
 
-  it 'includes recipe passenger::ohai_plugin' do
-    expect(chef_run).to include_recipe('passenger::ohai_plugin')
-  end # it
+  describe 'passenger::ohai_plugin' do
+    it 'includes described recipe' do
+      expect(chef_run).to include_recipe(subject)
+    end # it
+  end # describe
 
-  it 'includes recipe rails_app' do
-    expect(chef_run).to include_recipe('rails_app')
-  end # it
+  describe 'rails_app' do
+    it 'includes described recipe' do
+      expect(chef_run).to include_recipe(subject)
+    end # it
+  end # describe
 
-  it 'includes recipe rvm' do
-    expect(chef_run).to include_recipe('rvm')
-  end # it
+  describe 'rvm' do
+    it 'includes described recipe' do
+      expect(chef_run).to include_recipe(subject)
+    end # it
+  end # describe
 
-  it 'includes recipe rvm::system' do
-    expect(chef_run).to include_recipe('rvm::system')
-  end # it
+  describe 'rvm::system' do
+    it 'includes described recipe' do
+      expect(chef_run).to include_recipe(subject)
+    end # it
+  end # describe
 
-  it 'includes recipe rvm:gem_package' do
-    expect(chef_run).to include_recipe('rvm::gem_package')
-  end # it
+  describe 'rvm::gem_package' do
+    it 'includes described recipe' do
+      expect(chef_run).to include_recipe(subject)
+    end # it
+  end # describe
 
-  it 'installs package ruby-devel' do
-    expect(chef_run).to install_package('ruby-devel')
-  end # it
+  describe 'ruby-devel' do
+    it 'installs described package' do
+      expect(chef_run).to install_package(subject)
+    end # it
+  end # describe
 
-  it 'installs package curl-devel' do
-    expect(chef_run).to install_package('curl-devel')
-  end # it
+  describe 'curl-devel' do
+    it 'installs described package' do
+      expect(chef_run).to install_package(subject)
+    end # it
+  end # describe
 
   it 'creates rvm environment' do
     expect(chef_run).to create_rvm_environment('1.9.3-fake')
