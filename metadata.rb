@@ -7,7 +7,7 @@ description       'Installs/configures passenger'
 
 version           '0.1.1'
 depends           'build-essential'
-depends           'logrotate', '~> 1.4.0'
+depends           'logrotate', '~> 1.5.0'
 depends           'ohai', '>= 1.1.4'
 depends           'rails_app'
 depends           'rvm'
