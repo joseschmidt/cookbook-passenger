@@ -36,8 +36,10 @@ describe 'passenger::ohai_plugin' do
     end # it
   end # describe
 
-  it 'includes recipe ohai' do
-    expect(chef_run).to include_recipe('ohai')
-  end # it
+  describe 'ohai' do
+    it 'includes described recipe' do
+      expect(chef_run).to include_recipe(subject)
+    end # it
+  end # describe
 
 end # describe

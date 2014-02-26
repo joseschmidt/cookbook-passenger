@@ -27,9 +27,11 @@ describe 'passenger::nginx' do
     end.converge(described_recipe)
   end # cached
 
-  it 'includes recipe passenger::default' do
-    expect(chef_run).to include_recipe('passenger::default')
-  end # it
+  describe 'passenger' do
+    it 'includes described recipe' do
+      expect(chef_run).to include_recipe(subject)
+    end # it
+  end # describe
 
   describe '/etc/rc.d/init.d/nginx' do
     it 'creates template with expected owner, group, mode' do
