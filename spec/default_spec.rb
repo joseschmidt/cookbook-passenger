@@ -10,7 +10,7 @@ describe 'passenger::default' do
       "cat | head -1 | grep -q '^rvm is a function$'\"").and_return(true)
   end # before
 
-  let(:chef_run) do
+  cached(:chef_run) do
     ChefSpec::Runner.new do |node|
       # override cookbook attributes
       node.set['passenger']['ruby_string'] = '1.9.3-fake'
@@ -22,7 +22,7 @@ describe 'passenger::default' do
       # required for build-essential cookbook on travis-ci
       node.set['platform_family'] = 'rhel'
     end.converge(described_recipe)
-  end # let
+  end # cached
 
   it 'includes recipe build-essential' do
     expect(chef_run).to include_recipe('build-essential')

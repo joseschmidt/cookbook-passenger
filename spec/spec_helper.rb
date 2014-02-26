@@ -1,6 +1,7 @@
 # encoding: utf-8
 require 'chefspec'
 require 'chefspec/berkshelf'
+require 'chefspec/cacher'
 Dir.glob(File.dirname(__FILE__) + '/helpers/**/*', &method(:require))
 
 RSpec.configure do |config|
