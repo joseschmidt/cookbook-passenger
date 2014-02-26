@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe 'passenger::ohai_plugin' do
-  let(:chef_run) do
+  cached(:chef_run) do
     ChefSpec::Runner.new do |node|
       # override cookbook attributes
       node.set['ohai']['plugin_path'] = '/etc/chef/ohai_plugins-qa'
@@ -11,7 +11,7 @@ describe 'passenger::ohai_plugin' do
       # required for build-essential cookbook on travis-ci
       node.set['platform_family'] = 'rhel'
     end.converge(described_recipe)
-  end # let
+  end # cached
 
   describe '/etc/chef/ohai_plugins-qa/passenger.rb' do
     it 'creates template with expected owner, group, mode' do

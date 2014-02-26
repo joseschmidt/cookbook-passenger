@@ -10,7 +10,7 @@ describe 'passenger::nginx' do
       "cat | head -1 | grep -q '^rvm is a function$'\"").and_return(true)
   end # before
 
-  let(:chef_run) do
+  cached(:chef_run) do
     ChefSpec::Runner.new do |node|
       # override cookbook attributes
       node.set['passenger']['nginx']['prefix'] = '/opt/nginx-qa'
@@ -25,7 +25,7 @@ describe 'passenger::nginx' do
       # required for build-essential cookbook on travis-ci
       node.set['platform_family'] = 'rhel'
     end.converge(described_recipe)
-  end # let
+  end # cached
 
   it 'includes recipe passenger::default' do
     expect(chef_run).to include_recipe('passenger::default')
