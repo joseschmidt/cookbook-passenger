@@ -27,14 +27,14 @@ ohai 'reload_passenger_nginx' do
 end # ohai
 
 template "#{node['ohai']['plugin_path']}/passenger.rb" do
-  source 'plugins/passenger.rb.erb'
-  owner 'root'
-  group 'root'
-  mode  '0755'
+  source    'plugins/passenger.rb.erb'
+  owner     'root'
+  group     'root'
+  mode      '0755'
   variables(
     :passenger_nginx_prefix => node['passenger']['nginx']['prefix']
   )
-  notifies :reload, 'ohai[reload_passenger_nginx]', :immediately
+  notifies  :reload, 'ohai[reload_passenger_nginx]', :immediately
 end # template
 
 include_recipe 'ohai'

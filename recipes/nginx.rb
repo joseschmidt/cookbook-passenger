@@ -104,10 +104,10 @@ end # service
 # TODO: need to fail if passenger_root or passenger_ruby is nil
 # TODO: try rvm_shell verify version for above?
 template node['passenger']['nginx']['conf_path'] do
-  owner 'root'
-  group 'root'
-  mode  '0644'
+  owner     'root'
+  group     'root'
+  mode      '0644'
   variables :passenger_root => passenger_root,
             :passenger_ruby => passenger_ruby
-  notifies :reload, 'service[nginx]'
+  notifies  :reload, 'service[nginx]'
 end # template
