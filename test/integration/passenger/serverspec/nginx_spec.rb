@@ -45,7 +45,7 @@ describe 'passenger::nginx' do
   end # describe
 
   describe file('/etc/logrotate.d/nginx') do
-    it 'is file' do
+    it 'is a file' do
       expect(subject).to be_file
     end # it
 
@@ -124,7 +124,7 @@ describe 'passenger::nginx' do
   end # describe
 
   describe file('/opt/nginx-qa/conf/nginx.conf') do
-    it 'is file' do
+    it 'is a file' do
       expect(subject).to be_file
     end # it
 

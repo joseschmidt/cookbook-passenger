@@ -8,13 +8,13 @@ describe 'passenger::default' do
     end # it
   end # describe
 
-  describe package('curl-devel'), :if => rhel5? do
+  describe package('curl-devel'), :if => platform?(:rhel5) do
     it 'is installed' do
       expect(subject).to be_installed
     end # it
   end # describe
 
-  describe package('libcurl-devel'), :if => rhel6? do
+  describe package('libcurl-devel'), :if => platform?(:rhel6) do
     it 'is installed' do
       expect(subject).to be_installed
     end # it
