@@ -11,12 +11,12 @@ Requirements
 ### Cookbooks
 The following cookbooks are direct dependencies because they're used for common "default" functionality.
 
-- `build-essential`
-- `logrotate`
-- `ohai`
-- `rails_app`
-- `rvm`
-- `yum`
+- [`build-essential`](https://github.com/opscode-cookbooks/build-essential)
+- [`logrotate`](https://github.com/opscode-cookbooks/logrotate)
+- [`ohai`](https://github.com/opscode-cookbooks/ohai)
+- [`rails_app`](https://github.com/jhx/cookbook-rails_app)
+- [`rvm`](https://github.com/fnichol/chef-rvm)
+- [`yum-epel`](https://github.com/opscode-cookbooks/yum-epel)
 
 ### Platforms
 The following platforms are supported and tested under Test Kitchen:
