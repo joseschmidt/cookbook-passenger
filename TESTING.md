@@ -1,4 +1,4 @@
-Testing
+TESTING
 =======
 This cookbook uses a variety of testing components:
 
