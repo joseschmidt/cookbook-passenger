@@ -24,7 +24,7 @@ describe 'passenger::default' do
     end.converge(described_recipe)
   end # cached
 
-  describe 'build-essential' do
+  describe 'build-essential::default' do
     it 'includes described recipe' do
       expect(chef_run).to include_recipe(subject)
     end # it
@@ -36,13 +36,13 @@ describe 'passenger::default' do
     end # it
   end # describe
 
-  describe 'rails_app' do
+  describe 'rails_app::default' do
     it 'includes described recipe' do
       expect(chef_run).to include_recipe(subject)
     end # it
   end # describe
 
-  describe 'rvm' do
+  describe 'rvm::default' do
     it 'includes described recipe' do
       expect(chef_run).to include_recipe(subject)
     end # it
