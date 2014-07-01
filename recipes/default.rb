@@ -19,13 +19,13 @@
 #
 
 #--------------------------------------------------- include dependent recipes
-include_recipe 'build-essential'
+include_recipe 'build-essential::default'
 
 include_recipe 'passenger::ohai_plugin'
 
-include_recipe 'rails_app'
+include_recipe 'rails_app::default'
 
-include_recipe 'rvm'
+include_recipe 'rvm::default'
 include_recipe 'rvm::system'
 include_recipe 'rvm::gem_package'
 

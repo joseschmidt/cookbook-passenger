@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-include_recipe 'passenger'
+include_recipe 'passenger::default'
 
 #--------------------------------------------------- install nginx init script
 template '/etc/rc.d/init.d/nginx' do # or is it /etc/rc.d/init.d/nginx?

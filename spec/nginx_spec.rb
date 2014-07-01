@@ -27,7 +27,7 @@ describe 'passenger::nginx' do
     end.converge(described_recipe)
   end # cached
 
-  describe 'passenger' do
+  describe 'passenger::default' do
     it 'includes described recipe' do
       expect(chef_run).to include_recipe(subject)
     end # it
