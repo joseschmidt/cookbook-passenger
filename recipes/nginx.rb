@@ -56,7 +56,7 @@ user node['passenger']['nginx']['user'] do
 end # user
 
 #---------------------------------------------- install passenger nginx module
-passenger_root = "/usr/local/rvm/gems/#{node['passenger']['ruby_string']}" +
+passenger_root = "/usr/local/rvm/gems/#{node['passenger']['ruby_string']}" \
   "/gems/passenger-#{node['passenger']['version']}"
 passenger_ruby = '/usr/local/rvm/wrappers/' \
   "#{node['passenger']['ruby_string']}/ruby"
@@ -71,7 +71,7 @@ nginx_signature = {
     'http_ssl_module',
     'cc-opt=-Wno-error',
     *node['passenger']['nginx']['modules']
-    ].sort
+  ].sort
 }
 
 extra_configure_flags = node['passenger']['nginx']['modules']
