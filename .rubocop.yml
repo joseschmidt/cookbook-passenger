@@ -1,14 +1,20 @@
 # This is the configuration used to check the rubocop source code.
 
 AllCops:
-  Includes:
+  Include:
     - Gemfile
     - Rakefile
-  Excludes:
-    - spec/foodcritic/**
+  Exclude:
+    - spec/foodcritic/**/*
 
 EmptyLines:
   Enabled: false
 
 HashSyntax:
   EnforcedStyle: hash_rockets
+
+SingleSpaceBeforeFirstArg:
+  Enabled: false
+
+Lint/UnusedBlockArgument:
+  Enabled: false
