@@ -10,7 +10,7 @@ group :test do
   gem 'berkshelf', '~> 3.1.1'
   gem 'chefspec', '~> 4.0.0'
   gem 'foodcritic', '~> 4.0.0'
-  gem 'rubocop', '~> 0.23.0'
+  gem 'rubocop', '~> 0.24.1'
   gem 'rvm', '~> 1.11.3.8'
 end # group
 
