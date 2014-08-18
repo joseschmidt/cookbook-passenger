@@ -1,6 +1,8 @@
 #!/usr/bin/env rake
 # encoding: utf-8
 require 'bundler/setup'
+require 'foodcritic'
+require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 
 # Style guide for this Rakefile:
@@ -12,29 +14,32 @@ task :default => [:build_ci]
 
 desc 'Builds the package for ci server.'
 task :build_ci do
-  Rake::Task[:knife].execute
-  Rake::Task[:rubocop].execute
-  Rake::Task[:foodcritic].execute
-  Rake::Task[:chefspec].execute
+  Rake::Task[:knife].invoke
+  Rake::Task[:rubocop].invoke
+  Rake::Task[:foodcritic].invoke
+  Rake::Task[:chefspec].invoke
 end # task
 
 #------------------------------------------------------------------ unit tests
 desc 'Runs chefspec unit tests against the cookbook.'
-task :chefspec do
-  sh 'bundle exec rspec'
-end # task
+task :chefspec => [:unit]
+RSpec::Core::RakeTask.new(:unit) do |t|
+  t.rspec_opts = [].tap do |a|
+    a.push('--color')
+    a.push('--format progress')
+  end.join(' ')
+end # RSpec::Core::RakeTask
 
 #-------------------------------------------------- cookbook lint/style checks
-desc 'Runs foodcritic lint tool against the cookbook.'
-task :foodcritic do
-  Rake::Task['foodcritic:default'].execute
-end # task
+FoodCritic::Rake::LintTask.new do |t|
+  t.options = {
+    :fail_tags => %w(any),
+    :include_rules => ['spec/foodcritic'],
+    :tags => %w() # exclude tags by using ~FC002 notation within array
+  }
+end # FoodCritic::Rake::LintTask.new
 
 namespace :foodcritic do
-  task :default do
-    sh 'bundle exec foodcritic -I spec/foodcritic/* -f any .'
-  end # task
-
   desc 'Updates 3rd-party foodcritic rules.'
   task :update do
     sh 'git submodule update --init --recursive'
@@ -71,7 +76,7 @@ end
 #------------------------------------------------------ ruby lint/style checks
 desc 'Runs rubocop lint tool against the cookbook.'
 task :rubocop do
-  RuboCop::RakeTask.new(:rubocop) do |task|
-    # task.fail_on_error = true
+  RuboCop::RakeTask.new(:rubocop) do |t|
+    # t.fail_on_error = true
   end
 end # task
